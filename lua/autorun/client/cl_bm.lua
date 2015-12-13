@@ -120,6 +120,8 @@ if (CLIENT) then
 			local LocalTitle = DListView:GetLine( line ):GetValue( 1 )		
 		
 			LocalPlayer():ConCommand( "say "..LocalText )
+			DFrame:Close()
+			DFrame:Remove()			
 		end
 		DListView.OnRowRightClick = function( id, line)
 			local LocalText = DListView:GetLine( line ):GetValue( 2 )
