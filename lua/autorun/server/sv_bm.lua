@@ -1,9 +1,13 @@
 if (SERVER) then 
 	MsgC( Color(255,0,0), "\n[BindMenu] Loading in progress! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
+	AddCSLuaFile( "bm_config.lua" )
+	include( "bm_config.lua" )
+	MsgC( Color(255,0,0), "\n[BindMenu] Config Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
 	util.AddNetworkString( "LMMBMOpenMenu" )
 	util.AddNetworkString( "LMMBMCreateBind" )
 	util.AddNetworkString( "LMMBMEditBind" )
 	util.AddNetworkString( "LMMBMDeleteBind" )
+	util.AddNetworkString( "LMMBMInvalidChars" )
 	MsgC( Color(255,0,0), "[BindMenu] Net Vars Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
 	if !(file.Exists( "lmm_bm_data", "DATA" )) then
 		file.CreateDir( "lmm_bm_data", "DATA" )
@@ -35,6 +39,12 @@ if (SERVER) then
 		local text = net.ReadString()
 	
 		file.Write( "lmm_bm_data/"..ply:SteamID64().."/binds/"..title..".txt", text )
+		
+		if !(file.Exists( "lmm_bm_data/"..ply:SteamID64().."/binds/"..title..".txt", "DATA" )) then
+			net.Start( "LMMBMInvalidChars" )
+				net.WriteString( title )
+			net.Send( ply )
+		end
 	
 	end)
 

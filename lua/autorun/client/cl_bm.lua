@@ -1,5 +1,7 @@
 if (CLIENT) then 
 	MsgC( Color(255,0,0), "\n[BindMenu] Loading in progress! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
+	include( "bm_config.lua" )
+	MsgC( Color(255,0,0), "[BindMenu] Config Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
 	MsgC( Color(255,0,0), "[BindMenu] Client-Side Fully Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
 
 	surface.CreateFont( "BMfontclose", {
@@ -38,6 +40,12 @@ if (CLIENT) then
 		surface.SetDrawColor( color )
 		surface.DrawOutlinedRect( x, y, w, h )
 	end
+	
+	net.Receive( "LMMBMInvalidChars", function()
+		local text = net.ReadString()
+		chat.AddText( Color(255,0,0), "There was a error creating the bind! Please make sure there are no special characters in '"..text.."'" )
+	end	)
+	
 	net.Receive( "LMMBMOpenMenu", function()
 		local title = net.ReadTable()
 
