@@ -1,5 +1,5 @@
 --[[You really should not edit this!]]--
-local version = "1.0" -- DO NOT EDIT THIS!
+local version = "1.1" -- DO NOT EDIT THIS!
 local version_url = "https://gist.githubusercontent.com/XxLMM13xXgaming/b4e362751c03cd89328e/raw/lmm_bindmenu" -- DO NOT EDIT THIS!
 local update_url = "https://github.com/XxLMM13xXgaming/lmm_bindmenu" -- DO NOT EDIT THIS!
 local msg_outdated = "You are using a outdated/un-supported version. You are on version "..version.."! Please download the new version here: " .. update_url -- DO NOT EDIT THIS!
