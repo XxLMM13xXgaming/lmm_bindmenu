@@ -8,6 +8,7 @@ if (SERVER) then
 	util.AddNetworkString( "LMMBMEditBind" )
 	util.AddNetworkString( "LMMBMDeleteBind" )
 	util.AddNetworkString( "LMMBMInvalidChars" )
+	util.AddNetworkString( "LMMBMPlayerOnCoolDown" )
 	MsgC( Color(255,0,0), "[BindMenu] Net Vars Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
 	if !(file.Exists( "lmm_bm_data", "DATA" )) then
 		file.CreateDir( "lmm_bm_data", "DATA" )
@@ -34,9 +35,20 @@ if (SERVER) then
 		net.Send( ply )
 	end	
 
+	concommand.Add( "+bindmenu", function( ply )
+		SendGUI( ply )
+	end )
+	
 	net.Receive( "LMMBMCreateBind", function( len, ply )
 		local title = net.ReadString()
 		local text = net.ReadString()
+		local PlayerIsOnCoolDownAns = ply:GetNWFloat( "PlayerIsOnCoolDown" )
+		
+		if PlayerIsOnCoolDownAns == 1 then 
+			net.Start( "LMMBMPlayerOnCoolDown" )
+			net.Send( ply )		
+			return
+		end
 	
 		file.Write( "lmm_bm_data/"..ply:SteamID64().."/binds/"..title..".txt", text )
 		
@@ -45,7 +57,12 @@ if (SERVER) then
 				net.WriteString( title )
 			net.Send( ply )
 		end
-	
+		
+		ply:SetNWFloat( "PlayerIsOnCoolDown", 1 )
+		timer.Simple( BMConfig.CoolTimeTime, function()
+			ply:SetNWFloat( "PlayerIsOnCoolDown", 0 )
+		end	)
+		
 	end)
 
 	net.Receive( "LMMBMEditBind", function( len, ply )

@@ -46,6 +46,10 @@ if (CLIENT) then
 		chat.AddText( Color(255,0,0), "There was a error creating the bind! Please make sure there are no special characters in '"..text.."'" )
 	end	)
 	
+	net.Receive( "LMMBMPlayerOnCoolDown", function()
+		chat.AddText( Color(255,0,0), "You are on a cool down! Please wait like "..BMConfig.CoolTimeTime.." sec! Thanks!" )
+	end	)
+	
 	net.Receive( "LMMBMOpenMenu", function()
 		local title = net.ReadTable()
 
