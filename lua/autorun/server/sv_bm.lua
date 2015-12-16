@@ -83,9 +83,19 @@ end	)
 function LMMBMOpenMenu(ply, text)
 	local text = string.lower(text)
 	if(string.sub(text, 0, 100)== "/bindmenu" or string.sub(text, 0, 100)== "!bindmenu") then
-		SendGUI(ply )
+		SendGUI(ply)
 		return ''
 	end
 end 
-hook.Add("PlayerSay", "LMMBMOpenMenu", LMMBMOpenMenu)		
+hook.Add("PlayerSay", "LMMBMOpenMenu", LMMBMOpenMenu)
+
+function LMMBMUpdateCMD(ply, text)
+	local text = string.lower(text)
+	if(string.sub(text, 0, 100)== "/bmupdate" or string.sub(text, 0, 100)== "!bmupdate") then
+		ply:SendLua([[gui.OpenURL("https://github.com/XxLMM13xXgaming/lmm_bindmenu")]])
+		return ''
+	end
+end 
+hook.Add("PlayerSay", "LMMBMUpdateCMD", LMMBMUpdateCMD)
+		
 MsgC( Color(255,0,0), "[BindMenu] Server-side Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
