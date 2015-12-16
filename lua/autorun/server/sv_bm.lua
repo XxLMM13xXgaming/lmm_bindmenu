@@ -20,7 +20,6 @@ function GivePlayerDataFileBM(ply)
 		file.CreateDir( "lmm_bm_data/"..ply:SteamID64().."/binds", "DATA" )
 	end 
 end
-hook.Add( "PlayerInitialSpawn", "GivePlayerDataFileBM", GivePlayerDataFileBM )
 
 local function SendGUI( ply )
 	local title = {}
@@ -49,6 +48,8 @@ net.Receive( "LMMBMCreateBind", function( len, ply )
 		return
 	end
 
+	GivePlayerDataFileBM(ply)
+	
 	file.Write( "lmm_bm_data/"..ply:SteamID64().."/binds/"..title..".txt", text )
 	
 	if !(file.Exists( "lmm_bm_data/"..ply:SteamID64().."/binds/"..title..".txt", "DATA" )) then
