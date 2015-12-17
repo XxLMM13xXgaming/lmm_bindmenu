@@ -1,3 +1,5 @@
+AddCSLuaFile( "bm_config.lua" )
+include( "bm_config.lua" )
 if BMConfig.UseVersionCheck == true then
 	--[[You really should not edit this!]]--
 	local version = "1.6" -- DO NOT EDIT THIS!
