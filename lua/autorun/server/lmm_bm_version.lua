@@ -1,8 +1,9 @@
 AddCSLuaFile( "bm_config.lua" )
 include( "bm_config.lua" )
+MsgC( Color(255,0,0), "\n[BindMenu] Version check loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
 if BMConfig.UseVersionCheck == true then
 	--[[You really should not edit this!]]--
-	local version = "1.6" -- DO NOT EDIT THIS!
+	local version = "1.7" -- DO NOT EDIT THIS!
 	local version_url = "https://gist.githubusercontent.com/XxLMM13xXgaming/b4e362751c03cd89328e/raw/lmm_bindmenu" -- DO NOT EDIT THIS!
 	local update_url = "https://github.com/XxLMM13xXgaming/lmm_bindmenu" -- DO NOT EDIT THIS!
 	local msg_outdated = "You are using a outdated/un-supported version. You are on version "..version.."! Please download the new version by typing !bmupdate or go here: " .. update_url -- DO NOT EDIT THIS!

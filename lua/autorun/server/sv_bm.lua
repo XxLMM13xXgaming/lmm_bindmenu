@@ -1,19 +1,19 @@
 MsgC( Color(255,0,0), "\n[BindMenu] Loading in progress! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
 AddCSLuaFile( "bm_config.lua" )
 include( "bm_config.lua" )
-MsgC( Color(255,0,0), "\n[BindMenu] Config Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
+MsgC( Color(255,0,0), "\n[BindMenu] Config Loaded!\n" )
 util.AddNetworkString( "LMMBMOpenMenu" )
 util.AddNetworkString( "LMMBMCreateBind" )
 util.AddNetworkString( "LMMBMEditBind" )
 util.AddNetworkString( "LMMBMDeleteBind" )
 util.AddNetworkString( "LMMBMInvalidChars" )
 util.AddNetworkString( "LMMBMPlayerOnCoolDown" )
-MsgC( Color(255,0,0), "[BindMenu] Net Vars Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
+MsgC( Color(255,0,0), "[BindMenu] Net Vars Loaded!\n" )
 if !(file.Exists( "lmm_bm_data", "DATA" )) then
 	file.CreateDir( "lmm_bm_data", "DATA" )
-	MsgC( Color(255,0,0), "[BindMenu] Dada File Created! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )		
+	MsgC( Color(255,0,0), "[BindMenu] Dada File Created!\n" )		
 end
-MsgC( Color(255,0,0), "[BindMenu] Data File Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
+MsgC( Color(255,0,0), "[BindMenu] Data File Loaded!\n" )
 
 function GivePlayerDataFileBM(ply)
 	if !file.Exists( "lmm_bm_data/"..ply:SteamID64(), "DATA" ) then
@@ -40,9 +40,9 @@ end )
 net.Receive( "LMMBMCreateBind", function( len, ply )
 	local title = net.ReadString()
 	local text = net.ReadString()
-	local PlayerIsOnCoolDownAns = ply:GetNWFloat( "PlayerIsOnCoolDown" )
+	local PlayerIsOnCoolDownAns = ply:GetNWBool( "PlayerIsOnCoolDown" )
 	
-	if PlayerIsOnCoolDownAns == 1 then 
+	if PlayerIsOnCoolDownAns then 
 		net.Start( "LMMBMPlayerOnCoolDown" )
 		net.Send( ply )		
 		return
@@ -58,9 +58,9 @@ net.Receive( "LMMBMCreateBind", function( len, ply )
 		net.Send( ply )
 	end
 	
-	ply:SetNWFloat( "PlayerIsOnCoolDown", 1 )
+	ply:SetNWBool( "PlayerIsOnCoolDown", true )
 	timer.Simple( BMConfig.CoolTimeTime, function()
-		ply:SetNWFloat( "PlayerIsOnCoolDown", 0 )
+		ply:SetNWBool( "PlayerIsOnCoolDown", false )
 	end	)
 	
 end)
@@ -68,9 +68,21 @@ end)
 net.Receive( "LMMBMEditBind", function( len, ply )
 	local title = net.ReadString()
 	local text = net.ReadString()
-
+	local PlayerIsOnCoolDownAns = ply:GetNWBool( "PlayerIsOnCoolDown" )
+	
+	if PlayerIsOnCoolDownAns then 
+		net.Start( "LMMBMPlayerOnCoolDown" )
+		net.Send( ply )		
+		return
+	end	
+	
 	file.Write( "lmm_bm_data/"..ply:SteamID64().."/binds/"..title..".txt", text )
 
+	ply:SetNWBool( "PlayerIsOnCoolDown", true )
+	timer.Simple( BMConfig.CoolTimeTime, function()
+		ply:SetNWBool( "PlayerIsOnCoolDown", false )
+	end	)	
+	
 end)
 
 net.Receive( "LMMBMDeleteBind", function(len, ply )
@@ -98,4 +110,4 @@ function LMMBMUpdateCMD(ply, text)
 end 
 hook.Add("PlayerSay", "LMMBMUpdateCMD", LMMBMUpdateCMD)
 		
-MsgC( Color(255,0,0), "[BindMenu] Server-side Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
+MsgC( Color(255,0,0), "[BindMenu] Server-side Loaded!\n" )

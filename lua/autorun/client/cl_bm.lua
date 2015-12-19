@@ -1,7 +1,7 @@
 MsgC( Color(255,0,0), "\n[BindMenu] Loading in progress! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
 include( "bm_config.lua" )
-MsgC( Color(255,0,0), "[BindMenu] Config Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
-MsgC( Color(255,0,0), "[BindMenu] Client-Side Fully Loaded! (Made By: XxLMM13xXgaming STEAM_0:0:90799036)\n" )
+MsgC( Color(255,0,0), "[BindMenu] Config Loaded!\n" )
+MsgC( Color(255,0,0), "[BindMenu] Client-Side Fully Loaded!\n" )
 
 surface.CreateFont( "BMfontclose", {
 		font = "Lato Light",
